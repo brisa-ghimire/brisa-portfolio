@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brisa Ghimire — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFF8F0;
+    --ink: #1A1A2E;
+    --violet: #6C4FF6;
+    --violet-light: #EFE9FF;
+    --coral: #FF6B5B;
+    --coral-light: #FFE5E1;
+    --mustard: #FFC94D;
+    --mustard-light: #FFF3D6;
+    --green: #1FAE6E;
+    --line: rgba(26,26,46,0.12);
+    --max-w: 920px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- background texture ---------- */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
+  }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(255,248,240,0.85);
+    border-bottom: 2px solid var(--ink);
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+  }
+  .nav-name {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
+  .nav-name span { color: var(--violet); }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .nav-links a {
+    position: relative;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--violet); }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--coral);
+    transition: width 0.25s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding: 88px 0 64px;
+    position: relative;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--violet);
+    background: var(--violet-light);
+    border: 1.5px solid var(--violet);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 28px;
+  }
+  .eyebrow .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .hero h1 .hl {
+    color: var(--violet);
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .hl svg {
+    position: absolute;
+    bottom: -6px; left: 0;
+    width: 100%;
+    z-index: -1;
+  }
+
+  .hero .role-line {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(16px, 2.6vw, 20px);
+    color: var(--ink);
+    margin-bottom: 28px;
+    min-height: 28px;
+  }
+  .role-line .cursor {
+    display: inline-block;
+    width: 10px;
+    background: var(--coral);
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero p.lede {
+    font-size: 18px;
+    max-width: 560px;
+    color: rgba(26,26,46,0.78);
+    margin-bottom: 36px;
+  }
+
+  .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 13px 24px;
+    border-radius: 8px;
+    border: 2px solid var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--violet);
+    color: var(--cream);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .btn-primary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn-ghost {
+    background: var(--cream);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--mustard);
+  }
+  .btn-ghost:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--mustard); }
+
+  /* ---------- section label ---------- */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--coral);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before { content: "//"; opacity: 0.6; }
+  .section-title {
+    font-size: clamp(28px, 5vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  section { padding: 72px 0; }
+  section + section { border-top: 2px dashed var(--line); }
+
+  /* ---------- about ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text p { margin-bottom: 16px; font-size: 16.5px; color: rgba(26,26,46,0.85); }
+  .about-text strong { color: var(--violet); }
+
+  .stat-card {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 14px;
+  }
+  .stat-card .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--mustard);
+  }
+  .stat-card .label { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+
+  /* ---------- skills ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 640px) { .skills-grid { grid-template-columns: 1fr; } }
+
+  .skill-card {
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    padding: 22px 24px;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+  }
+  .skill-card.c1::before { background: var(--violet); }
+  .skill-card.c2::before { background: var(--coral); }
+  .skill-card.c3::before { background: var(--mustard); }
+  .skill-card.c4::before { background: var(--green); }
+
+  .skill-card h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    margin: 8px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: var(--violet-light);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .skill-card.c2 .tag { background: var(--coral-light); }
+  .skill-card.c3 .tag { background: var(--mustard-light); }
+  .skill-card.c4 .tag { background: #E3F8EE; }
+
+  /* ---------- projects ---------- */
+  .project-card {
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 24px;
+    background: var(--cream);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 8px 8px 0 var(--violet);
+  }
+  .project-card:nth-child(2):hover { box-shadow: 8px 8px 0 var(--coral); }
+  .project-card:nth-child(3):hover { box-shadow: 8px 8px 0 var(--mustard); }
+
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .project-head h3 { font-size: 22px; font-weight: 800; }
+  .project-stack {
+    display: flex; gap: 7px; flex-wrap: wrap;
+  }
+  .stack-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1.5px solid var(--ink);
+    background: var(--mustard-light);
+    white-space: nowrap;
+  }
+  .project-card p.desc { color: rgba(26,26,46,0.8); margin-bottom: 14px; }
+  .project-bullets { list-style: none; }
+  .project-bullets li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: rgba(26,26,46,0.85);
+  }
+  .project-bullets li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--violet);
+    font-weight: 700;
+  }
+
+  /* ---------- experience timeline ---------- */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    border-left: 3px solid var(--ink);
+  }
+  .tl-item { position: relative; margin-bottom: 40px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: -42px;
+    top: 4px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 3px solid var(--ink);
+    background: var(--coral);
+  }
+  .tl-item:nth-child(1) .tl-dot { background: var(--violet); }
+  .tl-item:nth-child(2) .tl-dot { background: var(--coral); }
+  .tl-item:nth-child(3) .tl-dot { background: var(--mustard); }
+  .tl-item:nth-child(4) .tl-dot { background: var(--green); }
+
+  .tl-when {
+    font-family: 'Space Mono', monospace;
+    font-size: 12.5px;
+    color: var(--violet);
+    margin-bottom: 4px;
+  }
+  .tl-item h3 { font-size: 19px; font-weight: 800; margin-bottom: 2px; }
+  .tl-item .tl-org { font-size: 14px; color: rgba(26,26,46,0.6); margin-bottom: 10px; font-weight: 600; }
+  .tl-item p { font-size: 15px; color: rgba(26,26,46,0.85); }
+
+  /* ---------- footer / contact ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 64px 0 40px;
+  }
+  footer .section-label { color: var(--mustard); }
+  footer h2 {
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  footer p.sub { opacity: 0.75; margin-bottom: 32px; max-width: 480px; }
+  .contact-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+  footer .btn-primary { background: var(--mustard); color: var(--ink); border-color: var(--mustard); box-shadow: 4px 4px 0 var(--coral); }
+  footer .btn-primary:hover { box-shadow: 6px 6px 0 var(--coral); }
+  footer .btn-ghost { background: transparent; color: var(--cream); border-color: var(--cream); box-shadow: none; }
+  footer .btn-ghost:hover { background: var(--cream); color: var(--ink); transform: none; }
+
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 1px solid rgba(255,248,240,0.18);
+    padding-top: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12.5px;
+    opacity: 0.55;
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 0 18px; }
+    .hero { padding: 64px 0 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">brisa<span>.</span>ghimire</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow"><span class="dot"></span> open to internships &amp; co-ops · 2026</div>
+  <h1>Brisa Ghimire builds<br><span class="hl">things that learn.</span></h1>
+  <div class="role-line mono">&gt; <span id="typed"></span><span class="cursor">&nbsp;</span></div>
+  <p class="lede">CS + Math double-major at Rowan University. I build machine learning systems, data pipelines, and the occasional algorithm visualizer — currently doing computer vision research for real-world transportation problems.</p>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="#projects">See my projects ↓</a>
+    <a class="btn btn-ghost" href="mailto:ghimir94@rowan.edu">Get in touch</a>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-label">about</div>
+    <h2 class="section-title">A little bit about me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>Computer Science &amp; Mathematics</strong> double-degree student at Rowan University, graduating May 2028 with a 3.9 GPA. I like problems that sit at the intersection of statistics and software — places where a model has to actually hold up against messy, real data.</p>
+        <p>Right now I'm a <strong>Software Developer</strong> at Rowan's CREATES research lab, building ML and computer vision systems for transportation research, and a <strong>Data Intern</strong> for Rowan's enrollment management team, where I design pipelines that turn raw institutional data into decisions people actually use.</p>
+        <p>Outside of work, I'm <strong>Treasurer of ACM-W</strong> and founded a digital-skills training program in Kathmandu that taught 30 women foundational tech skills. I care a lot about making technical things accessible to people who didn't grow up with them.</p>
+      </div>
+      <div>
+        <div class="stat-card">
+          <div class="num">3.9</div>
+          <div class="label">GPA, B.S. CS + B.A. Math</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">32%</div>
+          <div class="label">efficiency gain from a pipeline I automated</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">40%</div>
+          <div class="label">faster data retrieval after a system I rebuilt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-label">skills</div>
+    <h2 class="section-title">What I work with</h2>
+    <div class="skills-grid">
+      <div class="skill-card c1">
+        <h3>🧠 AI &amp; Machine Learning</h3>
+        <div class="tag-list">
+          <span class="tag">Python</span><span class="tag">scikit-learn</span>
+          <span class="tag">Computer Vision</span><span class="tag">Prompt Engineering</span>
+          <span class="tag">Claude API</span><span class="tag">Model Evaluation</span>
+        </div>
+      </div>
+      <div class="skill-card c2">
+        <h3>⚙️ Engineering &amp; Tools</h3>
+        <div class="tag-list">
+          <span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">C++</span>
+          <span class="tag">SQL</span><span class="tag">Flask</span><span class="tag">React</span>
+          <span class="tag">Git</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-card c3">
+        <h3>📐 Mathematics</h3>
+        <div class="tag-list">
+          <span class="tag">Linear Algebra</span><span class="tag">Probability Theory</span>
+          <span class="tag">Statistical Modeling</span><span class="tag">Regression</span>
+          <span class="tag">Predictive Analytics</span>
+        </div>
+      </div>
+      <div class="skill-card c4">
+        <h3>🤝 Other</h3>
+        <div class="tag-list">
+          <span class="tag">Data Pipelines</span><span class="tag">pandas</span>
+          <span class="tag">Leadership</span><span class="tag">Technical Communication</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-label">projects</div>
+    <h2 class="section-title">Things I've built</h2>
+
+    <div class="project-card">
+      <div class="project-head">
+        <h3>AlgoVision</h3>
+        <div class="project-stack">
+          <span class="stack-pill">Java</span><span class="stack-pill">JavaScript</span><span class="stack-pill">scikit-learn</span>
+        </div>
+      </div>
+      <p class="desc">An interactive playground for watching algorithms and ML models think in real time.</p>
+      <ul class="project-bullets">
+        <li>Built an object-oriented Java application to visualize data structures, algorithms, and ML workflows live.</li>
+        <li>Implemented interactive visualizations that make algorithmic and model behavior tangible, not abstract.</li>
+        <li>Applied core OOP concepts — abstraction, inheritance, modular design — throughout the architecture.</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-head">
+        <h3>SmartSpend — Intelligent Finance Platform</h3>
+        <div class="project-stack">
+          <span class="stack-pill">Python</span><span class="stack-pill">Flask</span><span class="stack-pill">SQL</span><span class="stack-pill">React</span>
+        </div>
+      </div>
+      <p class="desc">A full-stack personal finance platform that turns raw spending data into decisions.</p>
+      <ul class="project-bullets">
+        <li>Built a full-stack app with a Flask backend, SQL database, and React frontend connected via REST APIs.</li>
+        <li>Developed automated trend-analysis features and visualizations that generate real financial insight.</li>
+        <li>Designed database-backed functionality following solid software engineering practices.</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-head">
+        <h3>LLM-Powered SOAP Note Generator</h3>
+        <div class="project-stack">
+          <span class="stack-pill">Python</span><span class="stack-pill">Claude API</span><span class="stack-pill">Prompt Engineering</span>
+        </div>
+      </div>
+      <p class="desc">A pipeline that turns messy clinical conversation into clean, structured documentation.</p>
+      <ul class="project-bullets">
+        <li>Designed a prompt-engineering pipeline using the Claude API to generate structured SOAP notes from unstructured clinical input.</li>
+        <li>Implemented schema enforcement, guardrails, and multi-turn agent logic to handle ambiguous input reliably.</li>
+        <li>Applied generative AI to improve consistency and efficiency in real documentation workflows.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-label">experience</div>
+    <h2 class="section-title">Where I've worked</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">APR 2026 — PRESENT</div>
+        <h3>Software Developer</h3>
+        <div class="tl-org">CREATES, Rowan University · Glassboro, NJ</div>
+        <p>Designing and implementing ML and computer vision systems in Python for real-world transportation research — model development, data pipelines, and evaluation, end to end.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">APR 2025 — PRESENT</div>
+        <h3>Data Intern</h3>
+        <div class="tl-org">Rowan University, Division of Strategic Enrollment Management · Glassboro, NJ</div>
+        <p>Building automated Python and SQL pipelines for data cleaning and transformation — improved team efficiency by 32% and now informs long-term enrollment strategy.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">JUN 2023 — AUG 2024</div>
+        <h3>Software Data Assistant</h3>
+        <div class="tl-org">Embassy of Nepal · Abu Dhabi, UAE</div>
+        <p>Rebuilt entirely unstructured operational records into structured digital systems — cut retrieval time by 40% through full workflow redesign.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-when">JUN 2022 — JUN 2023</div>
+        <h3>Software Intern</h3>
+        <div class="tl-org">Dakchyata · Kathmandu, Nepal</div>
+        <p>Built reusable software components and automation scripts, iterating on tools based on structured user feedback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="section-label">contact</div>
+    <h2>Let's build something.</h2>
+    <p class="sub">I'm actively looking for internships and co-ops in software engineering, data, and applied ML. If something here is a fit, I'd love to hear from you.</p>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="mailto:ghimir94@rowan.edu">ghimir94@rowan.edu</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/brisa-ghimire/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Brisa Ghimire</span>
+      <span>built with curiosity &amp; way too much coffee</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const phrases = [
+    "CS + Math @ Rowan University",
+    "ML Engineer in training",
+    "GPA: 3.9 / 4.0",
+    "Building computer vision for transportation research"
+  ];
+  const el = document.getElementById('typed');
+  let pIdx = 0, cIdx = 0, deleting = false;
+
+  function tick() {
+    const phrase = phrases[pIdx];
+    if (!deleting) {
+      cIdx++;
+      el.textContent = phrase.slice(0, cIdx);
+      if (cIdx === phrase.length) {
+        deleting = true;
+        setTimeout(tick, 1600);
+        return;
+      }
+    } else {
+      cIdx--;
+      el.textContent = phrase.slice(0, cIdx);
+      if (cIdx === 0) {
+        deleting = false;
+        pIdx = (pIdx + 1) % phrases.length;
+      }
+    }
+    setTimeout(tick, deleting ? 35 : 55);
+  }
+  tick();
+
+  // respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = phrases[0];
+    document.querySelector('.cursor').style.animation = 'none';
+  }
+</script>
+
+</body>
+</html>
